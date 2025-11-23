@@ -1,0 +1,40 @@
+.createButton {
+  font-family: 'Fixel Text', sans-serif;
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.createButton svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.createButton:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .createButton {
+    width: 100%;
+  }
+}
+

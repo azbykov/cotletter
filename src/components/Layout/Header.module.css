@@ -1,0 +1,148 @@
+.header {
+  width: 100%;
+  background-color: var(--color-bg-primary);
+}
+
+.headerContent {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: var(--spacing-xl) var(--container-padding-desktop);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.leftSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  text-decoration: none;
+  color: inherit;
+}
+
+.logoIcon {
+  flex-shrink: 0;
+}
+
+.logoText {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.homeIconLeft {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color 0.2s;
+  border: 1px solid var(--color-border-light);
+  border-radius: 6px;
+}
+
+.homeIconLeft:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-border-default);
+}
+
+.homeIconLeft svg {
+  width: 16px;
+  height: 16px;
+}
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-md);
+}
+
+
+.homeIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: var(--color-text-label);
+  text-decoration: none;
+  transition: color 0.2s;
+  border: 1px solid var(--color-border-medium);
+  border-radius: 6px;
+}
+
+.homeIcon:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-border-default);
+}
+
+.homeIcon svg {
+  width: 20px;
+  height: 20px;
+}
+
+@media (max-width: 768px) {
+  .headerContent {
+    padding: var(--spacing-lg) var(--container-padding-mobile);
+    flex-direction: row;
+    align-items: center;
+    gap: var(--gap-md);
+  }
+
+  .leftSection {
+    flex: 1;
+  }
+
+  .logoText {
+    font-size: 18px;
+  }
+
+  .rightSection {
+    flex-shrink: 0;
+    align-items: center;
+  }
+
+  .homeIcon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .homeIcon svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 375px) {
+  .headerContent {
+    padding: var(--spacing-md) var(--container-padding-mobile);
+  }
+
+  .logoText {
+    font-size: 16px;
+  }
+
+  .homeIcon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .homeIcon svg {
+    width: 16px;
+    height: 16px;
+  }
+}

@@ -1,0 +1,96 @@
+.progressSection {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.progressText {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0;
+  text-align: center;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.desktopText {
+  display: inline;
+}
+
+.mobileText {
+  display: none;
+}
+
+.progressDots {
+  display: flex;
+  gap: 4px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background-color: var(--color-bg-tertiary);
+  transition: background-color 0.2s;
+}
+
+.dotFilled {
+  background-color: var(--color-text-primary);
+}
+
+.completedState {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.checkmarkIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.checkmarkIcon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.checkmarkIcon svg rect {
+  fill: var(--color-success-icon-bg);
+}
+
+.checkmarkIcon svg path {
+  fill: var(--color-success-icon);
+}
+
+@media (max-width: 768px) {
+  .desktopText {
+    display: none;
+  }
+
+  .mobileText {
+    display: inline;
+  }
+
+  .progressText {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+@media (max-width: 375px) {
+  .progressText {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .checkmarkIcon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
