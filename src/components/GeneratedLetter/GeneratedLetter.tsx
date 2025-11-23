@@ -16,7 +16,12 @@ export const GeneratedLetter = ({ letterText, isGenerating = false, onBackToForm
         <LoadingSpinner />
       ) : letterText ? (
         <>
-          {onBackToForm && (
+          {onBackToForm && showOnMobile && (
+            <button className={styles.editButton} onClick={onBackToForm}>
+              Edit
+            </button>
+          )}
+          {onBackToForm && !showOnMobile && (
             <button className={styles.editButton} onClick={onBackToForm}>
               Edit
             </button>
@@ -24,7 +29,13 @@ export const GeneratedLetter = ({ letterText, isGenerating = false, onBackToForm
           <div className={styles.content}>
             <p className={styles.text}>{letterText}</p>
           </div>
-          <CopyToClipboard text={letterText} />
+          {showOnMobile ? (
+            <div className={styles.mobileActions}>
+              <CopyToClipboard text={letterText} />
+            </div>
+          ) : (
+            <CopyToClipboard text={letterText} />
+          )}
         </>
       ) : (
         <div className={styles.placeholder}>

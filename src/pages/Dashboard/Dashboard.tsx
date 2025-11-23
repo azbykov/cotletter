@@ -3,13 +3,14 @@ import { ApplicationCard } from '../../components/ApplicationCard/ApplicationCar
 import { GoalBanner } from '../../components/GoalBanner/GoalBanner';
 import { CreateButton } from '../../components/CreateButton/CreateButton';
 import { useApplicationsStore } from '../../stores/useApplicationsStore';
+import { GOALS } from '../../constants';
 import styles from './Dashboard.module.css';
 
 export const Dashboard = () => {
   const applications = useApplicationsStore((state) => state.applications);
   const deleteApplication = useApplicationsStore((state) => state.deleteApplication);
 
-  const shouldShowBanner = applications.length < 5;
+  const shouldShowBanner = applications.length < GOALS.MIN_APPLICATIONS;
 
   return (
     <div className={styles.dashboard}>

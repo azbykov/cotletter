@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useCompletion } from '@ai-sdk/react';
 import { Header } from '../../components/Layout/Header';
 import { FormField } from '../../components/Form/FormField/FormField';
@@ -7,10 +7,10 @@ import { GeneratedLetter } from '../../components/GeneratedLetter/GeneratedLette
 import { GenerateButton } from '../../components/GenerateButton/GenerateButton';
 import { GoalBanner } from '../../components/GoalBanner/GoalBanner';
 import { useApplicationsStore } from '../../stores/useApplicationsStore';
+import { GOALS, VALIDATION } from '../../constants';
+import { useIsMobile } from '../../hooks/useIsMobile';
 import type { FormData, Application } from '../../types';
 import styles from './Generator.module.css';
-
-const MAX_DETAILS_LENGTH = 1200;
 
 const capitalizeFirstLetter = (str: string): string => {
   if (!str) return str;
@@ -32,6 +32,23 @@ export const Generator = () => {
   const [showLetterOnMobile, setShowLetterOnMobile] = useState<boolean>(false);
   const [hasGeneratedOnce, setHasGeneratedOnce] = useState<boolean>(false);
   const [generatedLetterText, setGeneratedLetterText] = useState<string>('');
+  const [wasManuallyClosed, setWasManuallyClosed] = useState<boolean>(false);
+  const {isMobile} = useIsMobile();
+
+  useEffect(() => {
+    if (generatedLetterText && isMobile && !showLetterOnMobile && !wasManuallyClosed) {
+      const timer = setTimeout(() => {
+        setShowLetterOnMobile(true);
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [generatedLetterText, isMobile, showLetterOnMobile, wasManuallyClosed]);
+
+  useEffect(() => {
+    if (!isMobile && showLetterOnMobile) {
+      setShowLetterOnMobile(false);
+    }
+  }, [isMobile, showLetterOnMobile]);
 
   const { complete, isLoading } = useCompletion({
     api: '/api/generate-letter',
@@ -41,10 +58,7 @@ export const Generator = () => {
 
       setGeneratedLetterText(fullText);
       setHasGeneratedOnce(true);
-
-      setTimeout(() => {
-        setShowLetterOnMobile(true);
-      }, 50);
+      setWasManuallyClosed(false);
 
       if (currentApplicationId) {
         updateApplication(currentApplicationId, {
@@ -67,7 +81,7 @@ export const Generator = () => {
     },
   });
 
-  const shouldShowBanner = useMemo(() => applications.length < 5, [applications.length]);
+  const shouldShowBanner = applications.length < GOALS.MIN_APPLICATIONS;
 
   const title = useMemo(() => {
     if (formData.jobTitle && formData.company) {
@@ -88,7 +102,7 @@ export const Generator = () => {
       formData.company.trim() !== '' &&
       formData.skills.trim() !== '' &&
       formData.additionalDetails.trim() !== '' &&
-      formData.additionalDetails.length <= MAX_DETAILS_LENGTH,
+      formData.additionalDetails.length <= VALIDATION.MAX_DETAILS_LENGTH,
     [formData]
   );
 
@@ -102,6 +116,7 @@ export const Generator = () => {
       setCurrentApplicationId(null);
       setShowLetterOnMobile(false);
       setGeneratedLetterText('');
+      setWasManuallyClosed(false);
     }
   }, []);
 
@@ -110,12 +125,10 @@ export const Generator = () => {
       return;
     }
 
-    try {
-      await complete(JSON.stringify(formData));
-    } catch (error) {
-      console.error('Failed to generate letter:', error);
-    }
-  }, [isFormValid, isLoading, formData, complete]);
+    setWasManuallyClosed(false);
+
+    await complete(JSON.stringify(formData));
+  }, [isFormValid, isLoading, formData, complete, currentApplicationId, updateApplication, addApplication]);
 
   const resetForm = useCallback(() => {
     setFormData({
@@ -128,11 +141,25 @@ export const Generator = () => {
     setShowLetterOnMobile(false);
     setHasGeneratedOnce(false);
     setGeneratedLetterText('');
+    setWasManuallyClosed(false);
   }, []);
 
   const handleBackToForm = useCallback(() => {
     setShowLetterOnMobile(false);
+    setWasManuallyClosed(true);
   }, []);
+
+  useEffect(() => {
+    if (showLetterOnMobile && isMobile) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [showLetterOnMobile, isMobile]);
 
   return (
     <div className={styles.generator}>
@@ -180,7 +207,7 @@ export const Generator = () => {
                 onChange={(e) => handleChange('additionalDetails', e.target.value)}
                 placeholder="I want to help you build awesome solutions to accomplish your goals and vision"
                 rows={6}
-                maxLength={MAX_DETAILS_LENGTH}
+                maxLength={VALIDATION.MAX_DETAILS_LENGTH}
               />
 
               <GenerateButton
@@ -189,6 +216,18 @@ export const Generator = () => {
                 repeat={hasGeneratedOnce}
                 onClick={handleGenerate}
               />
+              {generatedLetterText && !showLetterOnMobile && isMobile && (
+                <button
+                  className={styles.showLetterButton}
+                  onClick={() => {
+                    if (isMobile) {
+                      setShowLetterOnMobile(true);
+                    }
+                  }}
+                >
+                  View Letter
+                </button>
+              )}
             </div>
           </div>
           <div className={`${styles.rightColumn} ${showLetterOnMobile ? styles.showOnMobile : ''}`}>

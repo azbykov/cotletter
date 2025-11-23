@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Logo } from '../Logo/Logo';
 import { ProgressSection } from './ProgressSection/ProgressSection';
+import { GOALS } from '../../constants';
 import HomeIconSvg from '../../assets/home.svg?react';
 import styles from './Header.module.css';
 
@@ -9,7 +10,6 @@ interface HeaderProps {
 }
 
 export const Header = ({ applicationsCount }: HeaderProps) => {
-  const maxApplications = 5;
 
   return (
     <header className={styles.header}>
@@ -23,7 +23,7 @@ export const Header = ({ applicationsCount }: HeaderProps) => {
           </div>
         </div>
         <div className={styles.rightSection}>
-          <ProgressSection current={applicationsCount} max={maxApplications} />
+          <ProgressSection current={applicationsCount} max={GOALS.MIN_APPLICATIONS} />
           <Link to="/" className={styles.homeIcon}>
             <HomeIconSvg width={20} height={20} />
           </Link>

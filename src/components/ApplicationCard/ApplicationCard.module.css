@@ -85,7 +85,7 @@
     padding: var(--spacing-lg);
     height: auto;
     min-height: 200px;
-    max-height: none;
+    max-height: 300px;
   }
 
   .text {
@@ -98,6 +98,7 @@
   .card {
     padding: var(--spacing-md);
     min-height: 180px;
+    max-height: 250px;
   }
 
   .text {

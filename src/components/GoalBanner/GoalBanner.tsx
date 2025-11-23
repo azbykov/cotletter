@@ -1,5 +1,6 @@
 import { CreateButton } from '../CreateButton/CreateButton';
 import { ProgressIndicator } from './ProgressIndicator/ProgressIndicator';
+import { GOALS } from '../../constants';
 import styles from './GoalBanner.module.css';
 
 interface GoalBannerProps {
@@ -8,7 +9,6 @@ interface GoalBannerProps {
 }
 
 export const GoalBanner = ({ applicationsCount, onResetForm }: GoalBannerProps) => {
-  const maxApplications = 5;
 
   return (
     <div className={styles.banner}>
@@ -18,7 +18,7 @@ export const GoalBanner = ({ applicationsCount, onResetForm }: GoalBannerProps) 
           Generate and send out couple more job applications today to get hired faster
         </p>
         <CreateButton className={styles.createButton} onResetForm={onResetForm} />
-        <ProgressIndicator current={applicationsCount} max={maxApplications} />
+        <ProgressIndicator current={applicationsCount} max={GOALS.MIN_APPLICATIONS} />
       </div>
     </div>
   );

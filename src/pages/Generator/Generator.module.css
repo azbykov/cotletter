@@ -48,6 +48,26 @@
   gap: var(--spacing-lg);
 }
 
+.showLetterButton {
+  display: none;
+  padding: var(--spacing-lg);
+  border: 1px solid var(--color-border-medium);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-label);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+  width: 100%;
+  font-family: 'Fixel Text', sans-serif;
+}
+
+.showLetterButton:hover {
+  background-color: var(--color-bg-hover);
+  border-color: var(--color-border-hover);
+}
+
 .row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -80,6 +100,12 @@
 
   .form {
     gap: var(--spacing-md);
+  }
+
+  .showLetterButton {
+    display: block;
+    padding: var(--spacing-md);
+    font-size: 13px;
   }
 
   .rightColumn {

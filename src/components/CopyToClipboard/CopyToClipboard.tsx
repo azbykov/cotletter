@@ -23,6 +23,7 @@ export const CopyToClipboard = memo(({ text, disabled = false }: CopyToClipboard
       className={`${styles.copyLink} ${disabled ? styles.copyLinkDisabled : styles.copyLinkActive}`}
       onClick={handleCopy}
       disabled={disabled}
+      aria-label="Copy to clipboard"
     >
       Copy to clipboard
       <CopyIcon width={20} height={20} />
