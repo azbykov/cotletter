@@ -1,0 +1,124 @@
+.generator {
+  min-height: 100vh;
+  background-color: var(--color-bg-primary);
+}
+
+.content {
+  max-width: var(--container-max-width);
+  margin: var(--spacing-sm) auto 0;
+  padding: 0 var(--container-padding-desktop) 120px;
+}
+
+.titleContainer {
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border-divider);
+  margin-bottom: var(--spacing-lg);
+}
+
+.title {
+  font-family: 'Fixel Text', sans-serif;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 44px;
+  letter-spacing: -0.02em;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.title.filled {
+  color: var(--color-text-primary);
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap-xl);
+  align-items: stretch;
+}
+
+.leftColumn,
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+}
+
+
+@media (max-width: 768px) {
+  .content {
+    padding: 0 var(--container-padding-mobile) 80px;
+  }
+
+  .titleContainer {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .title {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .columns {
+    grid-template-columns: 1fr;
+    gap: var(--gap-lg);
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+  }
+
+  .form {
+    gap: var(--spacing-md);
+  }
+
+  .rightColumn {
+    display: block;
+    position: relative;
+  }
+
+  .overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-overlay);
+    z-index: 99;
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    pointer-events: none;
+  }
+
+  .overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.overlay {
+  display: none;
+}
+
+@media (max-width: 375px) {
+  .content {
+    padding: 0 var(--container-padding-mobile) 60px;
+  }
+
+  .title {
+    font-size: 20px;
+    line-height: 28px;
+  }
+}
+
