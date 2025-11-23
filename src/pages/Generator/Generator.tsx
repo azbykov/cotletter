@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
+import { useCompletion } from '@ai-sdk/react';
 import { Header } from '../../components/Layout/Header';
 import { FormField } from '../../components/Form/FormField/FormField';
 import { TextareaField } from '../../components/Form/TextareaField/TextareaField';
@@ -6,7 +7,6 @@ import { GeneratedLetter } from '../../components/GeneratedLetter/GeneratedLette
 import { GenerateButton } from '../../components/GenerateButton/GenerateButton';
 import { GoalBanner } from '../../components/GoalBanner/GoalBanner';
 import { useApplicationsStore } from '../../stores/useApplicationsStore';
-import { generateLetter } from '../../utils/letterGenerator';
 import type { FormData, Application } from '../../types';
 import styles from './Generator.module.css';
 
@@ -21,18 +21,51 @@ export const Generator = () => {
   const applications = useApplicationsStore((state) => state.applications);
   const addApplication = useApplicationsStore((state) => state.addApplication);
   const updateApplication = useApplicationsStore((state) => state.updateApplication);
-  
+
   const [formData, setFormData] = useState<FormData>({
     jobTitle: '',
     company: '',
     skills: '',
     additionalDetails: '',
   });
-  const [generatedLetter, setGeneratedLetter] = useState<string>('');
-  const [isGenerating, setIsGenerating] = useState<boolean>(false);
   const [currentApplicationId, setCurrentApplicationId] = useState<string | null>(null);
   const [showLetterOnMobile, setShowLetterOnMobile] = useState<boolean>(false);
   const [hasGeneratedOnce, setHasGeneratedOnce] = useState<boolean>(false);
+  const [generatedLetterText, setGeneratedLetterText] = useState<string>('');
+
+  const { complete, isLoading } = useCompletion({
+    api: '/api/generate-letter',
+    streamProtocol: 'text',
+    onFinish: (_prompt, completion) => {
+      const fullText = completion;
+
+      setGeneratedLetterText(fullText);
+      setHasGeneratedOnce(true);
+
+      setTimeout(() => {
+        setShowLetterOnMobile(true);
+      }, 50);
+
+      if (currentApplicationId) {
+        updateApplication(currentApplicationId, {
+          ...formData,
+          letterText: fullText,
+        });
+      } else {
+        const newApplication: Application = {
+          id: Date.now().toString(),
+          ...formData,
+          letterText: fullText,
+          createdAt: Date.now(),
+        };
+        addApplication(newApplication);
+        setCurrentApplicationId(newApplication.id);
+      }
+    },
+    onError: (error) => {
+      console.error('Error generating letter:', error);
+    },
+  });
 
   const shouldShowBanner = useMemo(() => applications.length < 5, [applications.length]);
 
@@ -64,48 +97,25 @@ export const Generator = () => {
       ...prev,
       [field]: value,
     }));
-    
+
     if (field === 'jobTitle' || field === 'company') {
       setCurrentApplicationId(null);
-      setGeneratedLetter('');
       setShowLetterOnMobile(false);
+      setGeneratedLetterText('');
     }
   }, []);
 
   const handleGenerate = useCallback(async () => {
-    if (!isFormValid || isGenerating) {
+    if (!isFormValid || isLoading) {
       return;
     }
 
-    setIsGenerating(true);
-    
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    const letter = generateLetter(formData);
-    setGeneratedLetter(letter);
-    setIsGenerating(false);
-    setHasGeneratedOnce(true);
-    
-    setTimeout(() => {
-      setShowLetterOnMobile(true);
-    }, 50);
-
-    if (currentApplicationId) {
-      updateApplication(currentApplicationId, {
-        ...formData,
-        letterText: letter,
-      });
-    } else {
-      const newApplication: Application = {
-        id: Date.now().toString(),
-        ...formData,
-        letterText: letter,
-        createdAt: Date.now(),
-      };
-      addApplication(newApplication);
-      setCurrentApplicationId(newApplication.id);
+    try {
+      await complete(JSON.stringify(formData));
+    } catch (error) {
+      console.error('Failed to generate letter:', error);
     }
-  }, [isFormValid, isGenerating, formData, currentApplicationId, addApplication, updateApplication]);
+  }, [isFormValid, isLoading, formData, complete]);
 
   const resetForm = useCallback(() => {
     setFormData({
@@ -114,10 +124,10 @@ export const Generator = () => {
       skills: '',
       additionalDetails: '',
     });
-    setGeneratedLetter('');
     setCurrentApplicationId(null);
     setShowLetterOnMobile(false);
     setHasGeneratedOnce(false);
+    setGeneratedLetterText('');
   }, []);
 
   const handleBackToForm = useCallback(() => {
@@ -175,16 +185,16 @@ export const Generator = () => {
 
               <GenerateButton
                 disabled={!isFormValid}
-                loading={isGenerating}
+                loading={isLoading}
                 repeat={hasGeneratedOnce}
                 onClick={handleGenerate}
               />
             </div>
           </div>
           <div className={`${styles.rightColumn} ${showLetterOnMobile ? styles.showOnMobile : ''}`}>
-            <GeneratedLetter 
-              letterText={generatedLetter} 
-              isGenerating={isGenerating}
+            <GeneratedLetter
+              letterText={generatedLetterText}
+              isGenerating={isLoading}
               onBackToForm={handleBackToForm}
               showOnMobile={showLetterOnMobile}
             />
