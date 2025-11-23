@@ -1,0 +1,145 @@
+.container {
+  background: var(--color-bg-card);
+  border-radius: 12px;
+  padding: var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  min-height: 400px;
+  position: relative;
+}
+
+.content {
+  flex: 1;
+  min-height: 0;
+  margin-bottom: var(--spacing-lg);
+}
+
+.text {
+  font-family: 'Fixel Text', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-lg) 0;
+  white-space: pre-wrap;
+}
+
+.placeholder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 400px;
+}
+
+.placeholderText {
+  font-family: 'Fixel Text', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0;
+  color: var(--color-text-tertiary);
+  margin: 0;
+  text-align: center;
+}
+
+.editButton {
+  position: absolute;
+  top: var(--spacing-lg);
+  right: var(--spacing-lg);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-border-medium);
+  border-radius: 6px;
+  background-color: var(--color-bg-primary);
+  font-family: 'Fixel Text', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--color-text-label);
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+  z-index: 10;
+  display: none;
+}
+
+.editButton:hover {
+  background-color: var(--color-bg-hover);
+  border-color: var(--color-border-hover);
+}
+
+
+@media (max-width: 768px) {
+  .container {
+    padding: var(--spacing-lg);
+    min-height: 250px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 16px 16px 0 0;
+    max-height: 80vh;
+    overflow-y: auto;
+    transform: translateY(100%);
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 100;
+    box-shadow: 0 -4px 24px var(--color-shadow);
+    pointer-events: none;
+  }
+
+  .container.show {
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .editButton {
+    display: block;
+  }
+
+  .placeholder {
+    min-height: 250px;
+  }
+
+  .text {
+    font-size: 16px;
+    line-height: 24px;
+    padding-top: var(--spacing-xl);
+  }
+
+  .placeholderText {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+@media (max-width: 375px) {
+  .container {
+    padding: var(--spacing-md);
+    min-height: 200px;
+    padding-top: var(--spacing-xl);
+  }
+
+  .editButton {
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    padding: 6px var(--spacing-sm);
+    font-size: 13px;
+  }
+
+  .placeholder {
+    min-height: 200px;
+  }
+
+  .text {
+    font-size: 14px;
+    line-height: 20px;
+    padding-top: var(--spacing-lg);
+  }
+
+  .placeholderText {
+    font-size: 14px;
+    line-height: 20px;
+  }
+}

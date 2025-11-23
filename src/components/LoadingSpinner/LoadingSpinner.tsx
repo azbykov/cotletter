@@ -1,0 +1,10 @@
+import styles from './LoadingSpinner.module.css';
+
+export const LoadingSpinner = () => {
+  return (
+    <div className={styles.spinner}>
+      <div className={styles.sphere}></div>
+    </div>
+  );
+};
+

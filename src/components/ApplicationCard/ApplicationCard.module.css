@@ -1,0 +1,117 @@
+.card {
+  background: var(--color-bg-card);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 552px;
+  height: 240px;
+  min-height: 240px;
+  max-height: 240px;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.content {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.content::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(to bottom, transparent, var(--color-bg-card));
+  pointer-events: none;
+}
+
+.text {
+  font-family: 'Fixel Text', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0;
+  color: var(--color-text-secondary);
+  margin: 0;
+  white-space: pre-wrap;
+  overflow: hidden;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.deleteButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-family: 'Fixel Text', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: var(--color-text-link);
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.deleteButton:hover {
+  opacity: 0.7;
+}
+
+.deleteButton svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 100%;
+    max-width: 100%;
+    padding: var(--spacing-lg);
+    height: auto;
+    min-height: 200px;
+    max-height: none;
+  }
+
+  .text {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+@media (max-width: 375px) {
+  .card {
+    padding: var(--spacing-md);
+    min-height: 180px;
+  }
+
+  .text {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .deleteButton {
+    font-size: 14px;
+  }
+
+  .deleteButton svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
