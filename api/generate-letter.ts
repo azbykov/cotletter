@@ -134,7 +134,7 @@ The letter should be:
 
 Generate the cover letter:`;
 
-    // @ts-expect-error
+    // @ts-expect-error - process.env is not typed in Vercel serverless functions
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
       // Fallback to template-based generation
@@ -155,7 +155,7 @@ Generate the cover letter:`;
 
     return result.toTextStreamResponse();
   } catch (error) {
-    // @ts-expect-error
+    // @ts-expect-error - process.env is not typed in Vercel serverless functions
     const isDevelopment = process.env.NODE_ENV === 'development';
     console.error('[API] Error generating letter, using fallback:', error);
     // Fallback to template-based generation

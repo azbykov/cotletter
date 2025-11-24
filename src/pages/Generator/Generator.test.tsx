@@ -41,7 +41,7 @@ describe('Generator', () => {
       error: undefined,
       stop: vi.fn(),
       setCompletion: vi.fn(),
-    } as any);
+    } as ReturnType<typeof useCompletion>);
   });
 
   it('should render generator form', () => {
@@ -189,7 +189,7 @@ describe('Generator', () => {
       error: undefined,
       stop: vi.fn(),
       setCompletion: vi.fn(),
-    } as any);
+    } as ReturnType<typeof useCompletion>);
 
     render(
       <BrowserRouter>

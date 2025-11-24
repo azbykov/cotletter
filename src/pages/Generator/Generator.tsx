@@ -46,9 +46,11 @@ export const Generator = () => {
 
   useEffect(() => {
     if (!isMobile && showLetterOnMobile) {
+      // Reset mobile letter view when switching to desktop
       setShowLetterOnMobile(false);
     }
-  }, [isMobile, showLetterOnMobile]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile]);
 
   const { complete, isLoading } = useCompletion({
     api: '/api/generate-letter',
@@ -128,7 +130,7 @@ export const Generator = () => {
     setWasManuallyClosed(false);
 
     await complete(JSON.stringify(formData));
-  }, [isFormValid, isLoading, formData, complete, currentApplicationId, updateApplication, addApplication]);
+  }, [isFormValid, isLoading, formData, complete]);
 
   const resetForm = useCallback(() => {
     setFormData({
