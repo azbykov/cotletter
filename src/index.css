@@ -1,4 +1,3 @@
-/* Fixel Text Font */
 @font-face {
   font-family: 'Fixel Text';
   src: url('./assets/fonts/FixelText-Regular.woff2') format('woff2');
@@ -47,34 +46,28 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* Color Tokens - Primary (Green) */
   --color-primary: #087443;
   --color-primary-hover: #065a33;
   --color-primary-light: #f0fdf4;
 
-  /* Color Tokens - Text */
   --color-text-primary: #101828;
   --color-text-base: #1f2937;
   --color-text-secondary: #667085;
   --color-text-tertiary: #9ca3af;
   --color-text-inverse: #ffffff;
 
-  /* Color Tokens - Background */
   --color-bg-primary: #ffffff;
   --color-bg-tertiary: #e5e7eb;
 
-  /* Color Tokens - Border */
   --color-border-default: #d1d5db;
   --color-border-light: #e5e7eb;
   --color-border-medium: #d0d5dd;
 
-  /* Color Tokens - Status */
   --color-error-border: #fda29b;
   --color-error-shadow: #fee4e2;
   --color-success-icon-bg: #d1fadf;
   --color-success-icon: #12b76a;
 
-  /* Color Tokens - Additional */
   --color-bg-card: #f2f4f7;
   --color-bg-hover: #f9fafb;
   --color-text-label: #344054;
@@ -89,15 +82,12 @@
   --color-white-transparent: rgba(255, 255, 255, 0.16);
   --color-shadow-inset: rgba(16, 24, 40, 0.08);
 
-  /* Layout Tokens - Container */
   --container-max-width: 1120px;
   --container-padding-desktop: 32px;
   --container-padding-mobile: 16px;
 
-  /* Layout Tokens - Breakpoints */
   --breakpoint-mobile: 768px;
 
-  /* Layout Tokens - Spacing */
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 12px;
@@ -106,18 +96,15 @@
   --spacing-2xl: 32px;
   --spacing-3xl: 36px;
 
-  /* Layout Tokens - Grid Gaps */
   --gap-sm: 12px;
   --gap-md: 16px;
   --gap-lg: 24px;
   --gap-xl: 32px;
 
-  /* Legacy support - using tokens */
   color: var(--color-text-base);
   background-color: var(--color-bg-primary);
 }
 
-/* Container utility class */
 .container {
   max-width: var(--container-max-width);
   margin: 0 auto;
