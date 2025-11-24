@@ -3,9 +3,7 @@ co~~ver~~ + **t** + letter
 
 Веб-приложение для генерации сопроводительных писем (cover letters) при поиске работы.
 
-[![CI](https://github.com/USERNAME/coletter/actions/workflows/ci.yml/badge.svg)](https://github.com/USERNAME/coletter/actions/workflows/ci.yml)
-
-> **Примечание:** Замените `USERNAME` в badge на имя вашего GitHub пользователя или организации.
+[![CI](https://github.com/azbykov/cotletter/actions/workflows/ci.yml/badge.svg)](https://github.com/azbykov/cotletter/actions/workflows/ci.yml)
 
 ## 🧪 Тестирование
 
