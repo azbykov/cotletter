@@ -6,7 +6,6 @@ import { Generator } from './Generator';
 import { useApplicationsStore } from '../../stores/useApplicationsStore';
 import { useCompletion } from '@ai-sdk/react';
 
-// Мокаем зависимости
 vi.mock('../../stores/useApplicationsStore', () => ({
   useApplicationsStore: vi.fn(),
 }));
@@ -197,7 +196,6 @@ describe('Generator', () => {
       </BrowserRouter>
     );
 
-    // Когда loading, кнопка показывает только иконку, поэтому ищем по классу или по disabled состоянию
     const buttons = screen.getAllByRole('button');
     const generateButton = buttons.find(button => button.disabled && button.className.includes('generateButton'));
     expect(generateButton).toBeDefined();

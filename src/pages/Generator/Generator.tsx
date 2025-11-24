@@ -46,7 +46,6 @@ export const Generator = () => {
 
   useEffect(() => {
     if (!isMobile && showLetterOnMobile) {
-      // Reset mobile letter view when switching to desktop
       setShowLetterOnMobile(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -5,7 +5,6 @@ import { CopyToClipboard } from './CopyToClipboard';
 
 describe('CopyToClipboard', () => {
   beforeEach(() => {
-    // Мокаем navigator.clipboard
     Object.defineProperty(navigator, 'clipboard', {
       value: {
         writeText: vi.fn().mockResolvedValue(undefined),
@@ -35,7 +34,6 @@ describe('CopyToClipboard', () => {
     const button = screen.getByRole('button', { name: /copy to clipboard/i });
     await user.click(button);
 
-    // Ждем завершения асинхронной операции
     await new Promise(resolve => setTimeout(resolve, 50));
 
     expect(writeTextSpy).toHaveBeenCalledWith(text);

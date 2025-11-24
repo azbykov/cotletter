@@ -2,7 +2,6 @@ import { openai } from '@ai-sdk/openai';
 import { streamText } from 'ai';
 import { z } from 'zod';
 
-// Fallback template-based letter generation
 const LETTER_TEMPLATE = `Dear [Company] Team,
 
 I am writing to express my interest in the [JobTitle] position.
@@ -134,10 +133,9 @@ The letter should be:
 
 Generate the cover letter:`;
 
-    // @ts-expect-error - process.env is not typed in Vercel serverless functions
+    // @ts-expect-error env
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
-      // Fallback to template-based generation
       const fallbackLetter = generateFallbackLetter(formData);
       return new Response(fallbackLetter, {
         status: 200,
@@ -145,7 +143,6 @@ Generate the cover letter:`;
       });
     }
 
-    // AI SDK 5.0: streamText returns a result that can be converted to stream
     const result = streamText({
       model: openai('gpt-3.5-turbo'),
       prompt,
@@ -155,10 +152,9 @@ Generate the cover letter:`;
 
     return result.toTextStreamResponse();
   } catch (error) {
-    // @ts-expect-error - process.env is not typed in Vercel serverless functions
+    // @ts-expect-error env
     const isDevelopment = process.env.NODE_ENV === 'development';
     console.error('[API] Error generating letter, using fallback:', error);
-    // Fallback to template-based generation
     if (formData) {
       try {
         const fallbackLetter = generateFallbackLetter(formData);

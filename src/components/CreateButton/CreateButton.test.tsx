@@ -4,7 +4,6 @@ import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import { CreateButton } from './CreateButton';
 
-// Мокаем useNavigate и useLocation
 const mockNavigate = vi.fn();
 const mockLocation = { pathname: '/' };
 

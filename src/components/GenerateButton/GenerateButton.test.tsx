@@ -81,7 +81,6 @@ describe('GenerateButton', () => {
 
     const button = screen.getByRole('button');
     expect(button).toBeDisabled();
-    // Проверяем, что кнопка содержит loading класс или иконку
     expect(button.className).toContain('loading');
   });
 });

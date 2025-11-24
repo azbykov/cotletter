@@ -2,12 +2,10 @@ import '@testing-library/jest-dom';
 import { cleanup } from '@testing-library/react';
 import { afterEach, vi } from 'vitest';
 
-// Очистка после каждого теста
 afterEach(() => {
   cleanup();
 });
 
-// Мокаем window.matchMedia для тестов
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: vi.fn().mockImplementation((query) => ({
@@ -22,7 +20,6 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-// Мокаем ResizeObserver для тестов
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
   unobserve: vi.fn(),

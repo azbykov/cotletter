@@ -5,7 +5,6 @@ import { Dashboard } from './Dashboard';
 import { useApplicationsStore } from '../../stores/useApplicationsStore';
 import type { Application } from '../../types';
 
-// Мокаем useApplicationsStore
 vi.mock('../../stores/useApplicationsStore', () => ({
   useApplicationsStore: vi.fn(),
 }));

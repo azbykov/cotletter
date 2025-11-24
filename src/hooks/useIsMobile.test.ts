@@ -8,14 +8,12 @@ describe('useIsMobile', () => {
   const originalRemoveEventListener = window.removeEventListener;
 
   beforeEach(() => {
-    // Мокаем window.innerWidth
     Object.defineProperty(window, 'innerWidth', {
       writable: true,
       configurable: true,
       value: 1024,
     });
 
-    // Мокаем addEventListener и removeEventListener
     window.addEventListener = vi.fn();
     window.removeEventListener = vi.fn();
   });
@@ -95,7 +93,6 @@ describe('useIsMobile', () => {
 
     expect(result.current.isMobile).toBe(false);
 
-    // Симулируем изменение размера окна
     act(() => {
       Object.defineProperty(window, 'innerWidth', {
         writable: true,
@@ -103,7 +100,6 @@ describe('useIsMobile', () => {
         value: 500,
       });
 
-      // Вызываем обработчик resize
       const resizeHandler = (window.addEventListener as ReturnType<typeof vi.fn>).mock.calls.find(
         (call) => call[0] === 'resize'
       )?.[1] as () => void;
@@ -113,8 +109,6 @@ describe('useIsMobile', () => {
       }
     });
 
-    // Проверяем, что значение обновилось
-    // Примечание: в реальном сценарии это может потребовать дополнительной настройки
     expect(window.addEventListener).toHaveBeenCalled();
   });
 });

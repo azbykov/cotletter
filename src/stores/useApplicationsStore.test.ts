@@ -2,7 +2,6 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { useApplicationsStore } from './useApplicationsStore';
 import type { Application } from '../types';
 
-// Мокаем localStorage
 const localStorageMock = (() => {
   let store: Record<string, string> = {};
 
@@ -26,7 +25,6 @@ Object.defineProperty(window, 'localStorage', {
 
 describe('useApplicationsStore', () => {
   beforeEach(() => {
-    // Очищаем стор перед каждым тестом
     useApplicationsStore.setState({ applications: [] });
     localStorageMock.clear();
   });
