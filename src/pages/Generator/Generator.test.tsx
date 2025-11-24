@@ -40,7 +40,7 @@ describe('Generator', () => {
       error: undefined,
       stop: vi.fn(),
       setCompletion: vi.fn(),
-    } as ReturnType<typeof useCompletion>);
+    } as unknown as ReturnType<typeof useCompletion>);
   });
 
   it('should render generator form', () => {
@@ -188,7 +188,7 @@ describe('Generator', () => {
       error: undefined,
       stop: vi.fn(),
       setCompletion: vi.fn(),
-    } as ReturnType<typeof useCompletion>);
+    } as unknown as ReturnType<typeof useCompletion>);
 
     render(
       <BrowserRouter>
@@ -197,7 +197,9 @@ describe('Generator', () => {
     );
 
     const buttons = screen.getAllByRole('button');
-    const generateButton = buttons.find(button => button.disabled && button.className.includes('generateButton'));
+    const generateButton = buttons.find((button): button is HTMLButtonElement => 
+      button instanceof HTMLButtonElement && button.disabled && button.className.includes('generateButton')
+    );
     expect(generateButton).toBeDefined();
     expect(generateButton).toBeDisabled();
   });

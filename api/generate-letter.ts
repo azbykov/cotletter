@@ -133,7 +133,6 @@ The letter should be:
 
 Generate the cover letter:`;
 
-    // @ts-expect-error env
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
       const fallbackLetter = generateFallbackLetter(formData);
@@ -152,7 +151,6 @@ Generate the cover letter:`;
 
     return result.toTextStreamResponse();
   } catch (error) {
-    // @ts-expect-error env
     const isDevelopment = process.env.NODE_ENV === 'development';
     console.error('[API] Error generating letter, using fallback:', error);
     if (formData) {
